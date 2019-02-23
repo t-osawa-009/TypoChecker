@@ -35,102 +35,101 @@ final class AnalyticsNamingTypo: NSObject {
             print("Number of Typo Name: \(typoList.count)")
         }
     }
-}
-
-// MARK: - private
-private func fetchWords(from name: String) -> [String] {
-    do {
-        let regex = try NSRegularExpression(pattern: "[a-zA-Z][a-z]+")
-        let range = NSRange(0..<name.count)
-        let results = regex.matches(in: name,
-                                    options: .reportCompletion,
-                                    range: range)
-        return results.compactMap { (name as NSString).substring(with: $0.range) }
-    } catch {
-        return []
-    }
-}
-
-private func findTypo(word: String) -> String? {
-    let checker = NSSpellChecker.shared
-    let typoRange = checker.checkSpelling(of: word, startingAt: 0)
-    guard typoRange.location != NSNotFound else {
-        return nil
+    
+    // MARK: - private
+    private static func fetchNames(from fileContents: String) -> [String] {
+        do {
+            let regex = try NSRegularExpression(pattern: "(?<=(^|\\s)(let|var|func|class|enum|struct|protocol)\\s)[a-zA-Z0-9_]+")
+            let range = NSRange(0..<fileContents.count)
+            let results = regex.matches(in: fileContents,
+                                        options: .reportCompletion,
+                                        range: range)
+            return results.compactMap { (fileContents as NSString).substring(with: $0.range) }
+        } catch {
+            return []
+        }
     }
     
-    var message: String = "Typo: [\(word)] "
-    guard let candidates = checker.guesses(forWordRange: typoRange,
-                                           in: word,
-                                           language: language,
-                                           inSpellDocumentWithTag: 0) else { return nil }
-    if !candidates.isEmpty {
-        message += "Did you mean: " + candidates.joined(separator: ", ")
+    private func fetchWords(from name: String) -> [String] {
+        do {
+            let regex = try NSRegularExpression(pattern: "[a-zA-Z][a-z]+")
+            let range = NSRange(0..<name.count)
+            let results = regex.matches(in: name,
+                                        options: .reportCompletion,
+                                        range: range)
+            return results.compactMap { (name as NSString).substring(with: $0.range) }
+        } catch {
+            return []
+        }
     }
     
-    return message
-}
-
-private func findLineNumber(from fileContents: String, targetWord: String) -> Int? {
-    let lines = fileContents.components(separatedBy: .newlines)
-    guard let result = lines.enumerated().first(where: { offset, text
-        in
-        text.contains(targetWord)
-    }) else {
-        return nil
+    private func findTypo(word: String) -> String? {
+        let checker = NSSpellChecker.shared
+        let typoRange = checker.checkSpelling(of: word, startingAt: 0)
+        guard typoRange.location != NSNotFound else {
+            return nil
+        }
+        
+        var message: String = "Typo: [\(word)] "
+        guard let candidates = checker.guesses(forWordRange: typoRange,
+                                               in: word,
+                                               language: language,
+                                               inSpellDocumentWithTag: 0) else { return nil }
+        if !candidates.isEmpty {
+            message += "Did you mean: " + candidates.joined(separator: ", ")
+        }
+        
+        return message
     }
     
-    return result.offset + 1
-}
-
-private func elementsInEnumerator(atPath path: String) -> [String] {
-    let enumerator = FileManager.default.enumerator(atPath: path)
-    var elements = [String]()
-    while let e = enumerator?.nextObject() as? String {
-        elements.append(e)
-    }
-    return elements
-}
-
-private func findSourcefiles() -> [SourceInfo] {
-    if !FileManager.default.fileExists(atPath: sourcePath) {
-        print("Invalid configuration: \(sourcePath) does not exist.")
-        exit(1)
+    private func findLineNumber(from fileContents: String, targetWord: String) -> Int? {
+        let lines = fileContents.components(separatedBy: .newlines)
+        guard let result = lines.enumerated().first(where: { offset, text
+            in
+            text.contains(targetWord)
+        }) else {
+            return nil
+        }
+        
+        return result.offset + 1
     }
     
-    return elementsInEnumerator(atPath: sourcePath)
-        .filter { $0.hasSuffix(".m") || $0.hasSuffix(".swift") || $0.hasSuffix(".xib") || $0.hasSuffix(".storyboard") }
-        .map { "\(sourcePath)/\($0)" }
-        .map {
-            if let result = try? String(contentsOfFile: $0, encoding: .utf8) {
-                return SourceInfo(contents: result, fileName: $0)
-            } else {
-                return nil
-            }
-        }.compactMap{$0}
-}
-
-private func fetchNames(from fileContents: String) -> [String] {
-    do {
-        let regex = try NSRegularExpression(pattern: "(?<=(^|\\s)(let|var|func|class|enum|struct|protocol)\\s)[a-zA-Z0-9_]+")
-        let range = NSRange(0..<fileContents.count)
-        let results = regex.matches(in: fileContents,
-                                    options: .reportCompletion,
-                                    range: range)
-        return results.compactMap { (fileContents as NSString).substring(with: $0.range) }
-    } catch {
-        return []
+    private func elementsInEnumerator(atPath path: String) -> [String] {
+        let enumerator = FileManager.default.enumerator(atPath: path)
+        var elements = [String]()
+        while let e = enumerator?.nextObject() as? String {
+            elements.append(e)
+        }
+        return elements
     }
-}
-
-
-struct SourceInfo {
-    let contents: String
-    let fileName: String
-    let names: [String]
-    init(contents: String, fileName: String) {
-        self.contents = contents
-        self.fileName = fileName
-        self.names = fetchNames(from: contents)
+    
+    private func findSourcefiles() -> [SourceInfo] {
+        if !FileManager.default.fileExists(atPath: sourcePath) {
+            print("Invalid configuration: \(sourcePath) does not exist.")
+            exit(1)
+        }
+        
+        return elementsInEnumerator(atPath: sourcePath)
+            .filter { $0.hasSuffix(".m") || $0.hasSuffix(".swift") || $0.hasSuffix(".xib") || $0.hasSuffix(".storyboard") }
+            .map { "\(sourcePath)/\($0)" }
+            .map {
+                if let result = try? String(contentsOfFile: $0, encoding: .utf8) {
+                    return SourceInfo(contents: result, fileName: $0)
+                } else {
+                    return nil
+                }
+            }.compactMap{$0}
+    }
+    
+    struct SourceInfo {
+        let contents: String
+        let fileName: String
+        let names: [String]
+        init(contents: String, fileName: String) {
+            self.contents = contents
+            self.fileName = fileName
+            self.names = fetchNames(from: contents)
+        }
     }
 }
 
