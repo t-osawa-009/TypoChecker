@@ -1,11 +1,10 @@
 import AppKit
 
+let configuration = Configuration()
 let enabled = true
-let relativeSourceFolder = "/TypoCheck"
-let sourcePath = "/Users/dazezhuoye/DeskTop/TypoChecker"
-let language = "en_US"
-let ignoredWords: [String] = []
-if enabled == false {
+let sourcePath = configuration.rootDirectory
+let ignoredWords: [String] = configuration.ignoredWords
+if !enabled {
     print("Typo check cancelled")
     exit(000)
 }
@@ -73,7 +72,7 @@ final class AnalyticsNamingTypo: NSObject {
         var message: String = "Typo: [\(word)] "
         guard let candidates = checker.guesses(forWordRange: typoRange,
                                                in: word,
-                                               language: language,
+                                               language: configuration.language,
                                                inSpellDocumentWithTag: 0) else { return nil }
         if !candidates.isEmpty {
             message += "Did you mean: " + candidates.joined(separator: ", ")
@@ -191,7 +190,7 @@ final class AnalyticsStringTypo: NSObject {
         var message: String = "Typo: [\(word)] "
         guard let candidates = checker.guesses(forWordRange: typoRange,
                                                in: word,
-                                               language: language,
+                                               language: configuration.language,
                                                inSpellDocumentWithTag: 0) else { return nil }
         if !candidates.isEmpty {
             message += "Did you mean: " + candidates.joined(separator: ", ")

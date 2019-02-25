@@ -7,8 +7,13 @@
 
 import Foundation
 
+enum YAMLKey: String {
+    case language
+    case ignoredWords
+}
+
 struct YAMLParser {
-    static func parse(_ yaml: String) throws -> [String: Any] {
+    static func parse(_ yaml: String) throws -> [String: YAML] {
         do {
             let obj = try UniYAML.decode(yaml)
             guard let dic = obj.dictionary, !dic.isEmpty else { return [:] }
