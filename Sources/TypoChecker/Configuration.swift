@@ -15,10 +15,9 @@ struct Configuration {
     let language: String
     let rootDirectory: String
     
-    init(fileName: String = Configuration.fileName, rootDirectory: String? = nil) {
-        let _rootDirectory = rootDirectory ?? FileManager.default.currentDirectoryPath
-        self.rootDirectory = _rootDirectory
-        let yamlPath = _rootDirectory + "/" + fileName
+    init(fileName: String = Configuration.fileName, rootDirectory: String) {
+        self.rootDirectory = rootDirectory
+        let yamlPath = rootDirectory + "/" + fileName
         
         if let yaml = try? String(contentsOfFile: yamlPath, encoding: .utf8),
             let result = try? YAMLParser.parse(yaml) {
