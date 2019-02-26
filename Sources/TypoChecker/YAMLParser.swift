@@ -17,10 +17,8 @@ struct YAMLParser {
         do {
             let obj = try UniYAML.decode(yaml)
             guard let dic = obj.dictionary, !dic.isEmpty else { return [:] }
-            print("\(dic)")
             return dic
-        } catch UniYAMLError.error(let detail) {
-            print(detail)
+        } catch UniYAMLError.error(_) {
             return [:]
         }
     }
