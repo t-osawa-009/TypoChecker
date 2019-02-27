@@ -110,6 +110,9 @@ final class AnalyticsNamingTypo: NSObject {
         
         return elementsInEnumerator(atPath: sourcePath)
             .filter { $0.hasSuffix(".m") || $0.hasSuffix(".swift") || $0.hasSuffix(".xib") || $0.hasSuffix(".storyboard") }
+            .filter { contents in
+                return configuration.excluded.first(where: { contents.contains($0) }) == nil
+            }
             .map { "\(sourcePath)/\($0)" }
             .map {
                 if let result = try? String(contentsOfFile: $0, encoding: .utf8) {
@@ -228,6 +231,9 @@ final class AnalyticsStringTypo: NSObject {
         
         return elementsInEnumerator(atPath: sourcePath)
             .filter { $0.hasSuffix(".m") || $0.hasSuffix(".swift") || $0.hasSuffix(".xib") || $0.hasSuffix(".storyboard") }
+            .filter { contents in
+                return configuration.excluded.first(where: { contents.contains($0) }) == nil
+            }
             .map { "\(sourcePath)/\($0)" }
             .map {
                 if let result = try? String(contentsOfFile: $0, encoding: .utf8) {

@@ -12,6 +12,7 @@ struct Configuration {
     static let language = "en_US"
     
     let ignoredWords: [String]
+    let excluded: [String]
     let language: String
     let rootDirectory: String
     
@@ -24,9 +25,13 @@ struct Configuration {
             language = result[YAMLKey.language.rawValue]?.string ?? Configuration.language
             let _ignoredWords = result[YAMLKey.ignoredWords.rawValue]?.array?.compactMap({ $0.string }) ?? []
             ignoredWords = _ignoredWords
+            
+            let _excluded = result[YAMLKey.excluded.rawValue]?.array?.compactMap({ $0.string }) ?? []
+            excluded = _excluded
         } else {
             ignoredWords = []
             language = Configuration.language
+            excluded = []
         }
     }
 }

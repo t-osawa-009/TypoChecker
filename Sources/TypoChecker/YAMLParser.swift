@@ -10,6 +10,7 @@ import Foundation
 enum YAMLKey: String {
     case language
     case ignoredWords
+    case excluded
 }
 
 struct YAMLParser {
