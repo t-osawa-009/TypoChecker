@@ -27,7 +27,7 @@ final class AnalyticsNamingTypo: Analytics {
             file.names.forEach { (name) in
                 let _words: [String] = fetchWords(from: name)
                 _words.forEach({ (word) in
-                    if let typo = findTypo(word: word), let lineNumber = findLineNumber(from: file.contents, targetWord: word), !ignoredWords.contains(word) {
+                    if let typo = findTypo(word: word), let lineNumber = findLineNumber(from: file.contents, targetWord: word) {
                         typoList.append(file.fileName + " \(lineNumber) : " + typo)
                     }
                 })
@@ -95,6 +95,7 @@ final class AnalyticsNamingTypo: Analytics {
     
     private func findTypo(word: String) -> String? {
         let checker = NSSpellChecker.shared
+        checker.setIgnoredWords(configuration.ignoredWords, inSpellDocumentWithTag: 0)
         let typoRange = checker.checkSpelling(of: word, startingAt: 0)
         guard typoRange.location != NSNotFound else {
             return nil
