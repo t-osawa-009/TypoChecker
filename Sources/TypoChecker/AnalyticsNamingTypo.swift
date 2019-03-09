@@ -28,7 +28,10 @@ final class AnalyticsNamingTypo: Analytics {
                 let _words: [String] = fetchWords(from: name)
                 _words.forEach({ (word) in
                     if let typo = findTypo(word: word), let lineNumber = findLineNumber(from: file.contents, targetWord: word) {
-                        typoList.append(file.fileName + " \(lineNumber) : " + typo)
+                        let str = file.fileName
+                        + ":\(lineNumber): "
+                        + "warning: \"\(typo)\""
+                        typoList.append(str)
                     }
                 })
             }

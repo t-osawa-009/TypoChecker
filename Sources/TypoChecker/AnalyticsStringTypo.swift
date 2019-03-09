@@ -28,7 +28,10 @@ final class AnalyticsStringTypo: Analytics {
                 let _words: [String] = findWords(from: name)
                 _words.forEach({ (word) in
                     if let typo = findTypo(word: word), let lineNumber = findLineNumber(from: file.contents, targetWord: word) {
-                        typoList.append(file.fileName + " \(lineNumber) : " + typo)
+                        let str = file.fileName
+                            + ":\(lineNumber): "
+                            + "warning: \"\(typo)\""
+                        typoList.append(str)
                     }
                 })
             }
@@ -52,7 +55,7 @@ final class AnalyticsStringTypo: Analytics {
         }
         
         return elementsInEnumerator(atPath: sourcePath)
-            .filter { $0.hasSuffix(".m") || $0.hasSuffix(".swift") || $0.hasSuffix(".xib") || $0.hasSuffix(".storyboard") }
+            .filter { $0.hasSuffix(".m") || $0.hasSuffix(".swift") }
             .filter { contents in
                 return configuration.excluded.first(where: { contents.contains($0) }) == nil
             }
