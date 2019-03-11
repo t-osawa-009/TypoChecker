@@ -28,10 +28,8 @@ final class AnalyticsStringTypo: Analytics {
                 let _words: [String] = findWords(from: name)
                 _words.forEach({ (word) in
                     if let typo = findTypo(word: word), let lineNumber = findLineNumber(from: file.contents, targetWord: word) {
-                        let str = file.fileName
-                            + ":\(lineNumber): "
-                            + "warning: \"\(typo)\""
-                        typoList.append(str)
+                        let report = XcodeReport(fileName: file.fileName, lineNumber: lineNumber, typoString: typo)
+                        typoList.append(report.output())
                     }
                 })
             }
