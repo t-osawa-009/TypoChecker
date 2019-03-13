@@ -28,7 +28,8 @@ final class AnalyticsStringTypo: Analytics {
                 let _words: [String] = findWords(from: name)
                 _words.forEach({ (word) in
                     if let typo = findTypo(word: word), let lineNumber = findLineNumber(from: file.contents, targetWord: word) {
-                        let report = XcodeReport(fileName: file.fileName, lineNumber: lineNumber, typoString: typo)
+                        let generator = ReportGenerator(reportType: configuration.reportType)
+                        let report = generator.generate(fileName: file.fileName, lineNumber: lineNumber, typoString: typo)
                         typoList.append(report.output())
                     }
                 })

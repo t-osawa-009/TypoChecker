@@ -15,6 +15,7 @@ struct Configuration {
     let excluded: [String]
     let language: String
     let rootDirectory: String
+    let reportType: ReportType
     
     init(fileName: String = Configuration.fileName, rootDirectory: String?, yamlDirectory: String?) {
         let directoryPath: String = {
@@ -43,11 +44,14 @@ struct Configuration {
             ignoredWords = _ignoredWords
             
             let _excluded = result[YAMLKey.excluded.rawValue]?.array?.compactMap({ $0.string }) ?? []
+            let _report = result[YAMLKey.report.rawValue]?.string ?? ""
             excluded = _excluded
+            reportType = ReportType(rawValue: _report) ?? .json
         } else {
             ignoredWords = []
             language = Configuration.language
             excluded = []
+            reportType = .json
         }
     }
 }

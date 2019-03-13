@@ -11,6 +11,7 @@ enum YAMLKey: String {
     case language
     case ignoredWords
     case excluded
+    case report
 }
 
 struct YAMLParser {
