@@ -22,6 +22,7 @@ if which TypoChecker >/dev/null; then
 TypoChecker -directoryPath "$SRCROOT" -report xcode
 else
 echo "warning: TypoChecker not installed, download from https://github.com/takuchantuyoshi/TypoChecker"
+fi
 ```
 ## Option
 You can see options by `TypoChecker --help`
