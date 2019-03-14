@@ -16,7 +16,7 @@ let package = Package(
             name: "TypoChecker",
             dependencies: []),
         .testTarget(
-            name: "TypoCheckTests",
+            name: "TypoCheckerTests",
             dependencies: ["TypoChecker"]),
     ]
 )

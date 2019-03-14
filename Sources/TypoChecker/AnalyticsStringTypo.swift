@@ -1,6 +1,6 @@
 //
 //  AnalyticsStringTypo.swift
-//  TypoCheckTests
+//  TypoChecker
 //
 //  Created by Takuya Ohsawa on 2019/03/01.
 //
