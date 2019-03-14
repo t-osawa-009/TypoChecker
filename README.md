@@ -26,3 +26,6 @@ fi
 ```
 ## Option
 You can see options by `TypoChecker --help`
+
+## License
+[MIT licensed.](https://github.com/takuchantuyoshi/TypoChecker/blob/master/LICENSE)
