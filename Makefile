@@ -13,6 +13,10 @@ update:
 build:
 	swift build -c release -Xswiftc -static-stdlib
 
+clean:
+	swift package clean
+	rm -rf $(BUILD_FOLDER) $(PROJECT).xcodeproj
+
 install: update build
 	mkdir -p $(PREFIX)/bin
 	cp -f $(RELEASE_BINARY_FOLDER) $(PREFIX)/bin/$(BINARY)

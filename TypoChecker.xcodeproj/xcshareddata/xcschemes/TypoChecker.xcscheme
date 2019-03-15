@@ -32,8 +32,8 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "TypoChecker::TypoCheckTests"
-               BuildableName = "TypoCheckTests.xctest"
+               BlueprintIdentifier = "TypoChecker::TypoCheckerTests"
+               BuildableName = "TypoCheckerTests.xctest"
                BlueprintName = "TypoCheckerTests"
                ReferencedContainer = "container:TypoChecker.xcodeproj">
             </BuildableReference>
