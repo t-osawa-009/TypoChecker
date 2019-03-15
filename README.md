@@ -10,6 +10,11 @@ $ git clone git@github.com:takuchantuyoshi/TypoChecker.git
 $ cd TypoChecker
 $ make install
 ```
+### [Mint](https://github.com/yonaskolb/Mint)
+```sh
+$ mint install takuchantuyoshi/TypoChecker
+```
+
 ## Usage
 ### Command Line
 ```sh
