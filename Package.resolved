@@ -1,7 +1,15 @@
 {
   "object": {
     "pins": [
-
+      {
+        "package": "UniYAML",
+        "repositoryURL": "https://github.com/seznam/swift-uniyaml.git",
+        "state": {
+          "branch": null,
+          "revision": "501fe9ac3348dfc8df4a0db67bccdacf7dda9785",
+          "version": "0.11.1"
+        }
+      }
     ]
   },
   "version": 1
