@@ -3,10 +3,10 @@ import AppKit
 let parser = ArgumentParser(CommandLine.arguments)
 parser.docString = "typo check"
 
-let directoryOption = StringOption(named: "directoryPath",
-                              flag: "directoryPath",
+let pathOption = StringOption(named: "path",
+                              flag: "path",
                               required: true,
-                              helpString: "search directoryPath",
+                              helpString: "search file path",
                               defaultValue: "")
 
 let yamlOption = StringOption(named: "ymlPath",
@@ -21,7 +21,7 @@ let reportOption = StringOption(named: "report",
                                 helpString: "output report type",
                                 defaultValue: ReportType.json.rawValue)
 
-let options: [StringOption] = [directoryOption, yamlOption, reportOption]
+let options: [StringOption] = [pathOption, yamlOption, reportOption]
 
 options.forEach { (option) in
     do {
@@ -39,7 +39,7 @@ if parser.isValid {
     print("parser success")
 }
 
-let _rootDirectory = parsedArgs?["directoryPath"] as? String ?? ""
+let _rootDirectory = parsedArgs?["path"] as? String ?? ""
 let _yamlDirectory = parsedArgs?["ymlPath"] as? String ?? ""
 let _reportOption = parsedArgs?["report"] as? String ?? ""
 let _reportType = ReportType(rawValue: _reportOption) ?? .json
