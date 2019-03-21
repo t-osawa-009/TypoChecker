@@ -47,7 +47,16 @@ struct FileObject {
 }
 
 class Analytics: NSObject {
-    func elementsInEnumerator(atPath path: String) -> [FileObject] {
+    static func findSourcefiles(atPath: String) -> [FileObject] {
+        if !FileManager.default.fileExists(atPath: atPath) {
+            print("Invalid configuration: \(atPath) does not exist.")
+            exit(1)
+        }
+        
+        return elementsInEnumerator(atPath: atPath)
+    }
+    
+    private static func elementsInEnumerator(atPath path: String) -> [FileObject] {
         if let file = try? File(path: path) {
             if let content = try? file.readAsString(encoding: .utf8) {
                 return [FileObject(path: path, content: content)]
@@ -65,15 +74,6 @@ class Analytics: NSObject {
         } else {
             return []
         }
-    }
-    
-    func findSourcefiles() -> [FileObject] {
-        if !FileManager.default.fileExists(atPath: sourcePath) {
-            print("Invalid configuration: \(sourcePath) does not exist.")
-            exit(1)
-        }
-        
-        return elementsInEnumerator(atPath: sourcePath)
     }
     
     func findLineNumber(from fileContents: String, targetWord: String) -> Int? {

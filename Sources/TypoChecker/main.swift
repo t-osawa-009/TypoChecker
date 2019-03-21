@@ -51,8 +51,10 @@ let configuration = Configuration(rootDirectory: _rootDirectory,
 let sourcePath = configuration.rootDirectory
 let ignoredWords: [String] = configuration.ignoredWords
 
+let elements = Analytics.findSourcefiles(atPath: sourcePath)
+
 let analyticsNamingTypo = AnalyticsNamingTypo()
-analyticsNamingTypo.perform()
+analyticsNamingTypo.perform(elements: elements)
 
 let analyticsStringTypo = AnalyticsStringTypo()
-analyticsStringTypo.perform()
+analyticsStringTypo.perform(elements: elements)

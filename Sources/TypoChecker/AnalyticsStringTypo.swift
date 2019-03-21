@@ -9,8 +9,7 @@ import Foundation
 import AppKit
 
 final class AnalyticsStringTypo: Analytics {
-    func perform() {
-        let elements = findSourcefiles()
+    func perform(elements: [FileObject]) {
         var typoList: [String] = []
         elements.forEach { (_element) in
             _element.contentStrings.forEach({ (name) in
