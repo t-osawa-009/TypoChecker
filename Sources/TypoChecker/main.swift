@@ -3,7 +3,7 @@ import AppKit
 let parser = ArgumentParser(CommandLine.arguments)
 parser.docString = "typo check"
 
-let pathOption = StringOption(named: "directoryPath",
+let directoryOption = StringOption(named: "directoryPath",
                               flag: "directoryPath",
                               required: true,
                               helpString: "search directoryPath",
@@ -21,7 +21,7 @@ let reportOption = StringOption(named: "report",
                                 helpString: "output report type",
                                 defaultValue: ReportType.json.rawValue)
 
-let options: [StringOption] = [pathOption, yamlOption, reportOption]
+let options: [StringOption] = [directoryOption, yamlOption, reportOption]
 
 options.forEach { (option) in
     do {
