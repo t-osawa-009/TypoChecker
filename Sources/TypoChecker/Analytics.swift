@@ -59,7 +59,7 @@ class Analytics: NSObject {
     private static func elementsInEnumerator(atPath path: String) -> [FileObject] {
         if let file = try? File(path: path) {
             if let content = try? file.readAsString(encoding: .utf8) {
-                return [FileObject(path: path, content: content)]
+                return [FileObject(path: file.path, content: content)]
             } else {
                 return []
             }
@@ -67,7 +67,7 @@ class Analytics: NSObject {
             var element: [FileObject] = []
             folder.makeFileSequence(recursive: true, includeHidden: false).forEach { (file) in
                 if let content = try? file.readAsString(encoding: .utf8) {
-                    element.append(FileObject(path: path + file.name, content: content))
+                    element.append(FileObject(path: file.path, content: content))
                 }
             }
             return element
