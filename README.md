@@ -18,13 +18,13 @@ $ mint install takuchantuyoshi/TypoChecker
 ## Usage
 ### Command Line
 ```sh
-$ TypoChecker -directoryPath hoge/foo
+$ TypoChecker -path hoge/foo
 ```
 ### Xcode
 Integrate TypoChecker into an Xcode scheme to get warnings displayed in the IDE. Just add a new "Run Script Phase" with:
 ```sh
 if which TypoChecker >/dev/null; then
-TypoChecker -directoryPath "$SRCROOT" -report xcode
+TypoChecker -path "$SRCROOT" -report xcode
 else
 echo "warning: TypoChecker not installed, download from https://github.com/takuchantuyoshi/TypoChecker"
 fi
