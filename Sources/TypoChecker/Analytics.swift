@@ -67,7 +67,7 @@ class Analytics: NSObject {
             var element: [FileObject] = []
             folder.makeFileSequence(recursive: true, includeHidden: false).forEach { (file) in
                 if let content = try? file.readAsString(encoding: .utf8) {
-                    element.append(FileObject(path: path, content: content))
+                    element.append(FileObject(path: path + file.name, content: content))
                 }
             }
             return element
