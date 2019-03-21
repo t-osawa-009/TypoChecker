@@ -9,16 +9,19 @@ let package = Package(
         .executable(name: "TypoChecker", targets: ["TypoChecker"])
     ],
     dependencies: [
-        .package(url: "https://github.com/seznam/swift-uniyaml.git", from: "0.11.1")
-    ],
+        .package(url: "https://github.com/seznam/swift-uniyaml.git", from: "0.11.1"),
+        .package(url: "https://github.com/JohnSundell/Files.git", from: "2.3.0"),
+        
+        ],
     targets: [
         .target(
             name: "TypoChecker",
             dependencies: [
                 "UniYAML",
-            ]),
+                "Files"
+                ]),
         .testTarget(
             name: "TypoCheckerTests",
             dependencies: ["TypoChecker"]),
-    ]
+        ]
 )

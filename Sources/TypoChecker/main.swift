@@ -3,10 +3,10 @@ import AppKit
 let parser = ArgumentParser(CommandLine.arguments)
 parser.docString = "typo check"
 
-let pathOption = StringOption(named: "directoryPath",
-                              flag: "directoryPath",
+let pathOption = StringOption(named: "path",
+                              flag: "path",
                               required: true,
-                              helpString: "search directoryPath",
+                              helpString: "search file path",
                               defaultValue: "")
 
 let yamlOption = StringOption(named: "ymlPath",
@@ -39,7 +39,7 @@ if parser.isValid {
     print("parser success")
 }
 
-let _rootDirectory = parsedArgs?["directoryPath"] as? String ?? ""
+let _rootDirectory = parsedArgs?["path"] as? String ?? ""
 let _yamlDirectory = parsedArgs?["ymlPath"] as? String ?? ""
 let _reportOption = parsedArgs?["report"] as? String ?? ""
 let _reportType = ReportType(rawValue: _reportOption) ?? .json
@@ -51,8 +51,10 @@ let configuration = Configuration(rootDirectory: _rootDirectory,
 let sourcePath = configuration.rootDirectory
 let ignoredWords: [String] = configuration.ignoredWords
 
+let elements = Analytics.findSourcefiles(atPath: sourcePath)
+
 let analyticsNamingTypo = AnalyticsNamingTypo()
-analyticsNamingTypo.perform()
+analyticsNamingTypo.perform(elements: elements)
 
 let analyticsStringTypo = AnalyticsStringTypo()
-analyticsStringTypo.perform()
+analyticsStringTypo.perform(elements: elements)
