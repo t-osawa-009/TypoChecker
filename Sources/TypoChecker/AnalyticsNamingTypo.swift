@@ -25,7 +25,7 @@ final class AnalyticsNamingTypo: Analytics {
         }
         
         let outputer = ReportOutputer(reportType: configuration.reportType, results: typoList)
-        outputer.report()
+        outputer.report(checkType: .name)
         
         if typoList.isEmpty {
             print("No typo")

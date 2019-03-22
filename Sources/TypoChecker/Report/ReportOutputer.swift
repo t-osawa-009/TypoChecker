@@ -6,6 +6,12 @@
 //
 
 import Foundation
+import Files
+
+enum CheckType: String {
+    case name
+    case string
+}
 
 final class ReportOutputer {
     private let reportType: ReportType
@@ -15,7 +21,7 @@ final class ReportOutputer {
         self.results = results
     }
     
-    func report() {
+    func report(checkType: CheckType) {
         switch reportType {
         case .markdown:
             let keys = [
@@ -25,7 +31,12 @@ final class ReportOutputer {
                 ].joined(separator: " | ")
             
             let rows = [keys, "--- | --- | ---"] + results
-            print(rows.joined(separator: "\n"))
+            let result = rows.joined(separator: "\n")
+            print(result)
+            if let folder = try? Folder(path: configuration.rootDirectory),
+                let file = try? folder.createFile(named: checkType.rawValue + "_" + Configuration.markdownName) {
+                _ = try? file.write(string: result)
+            }
         case .json, .xcode:
             results.forEach { (typo) in
                 print(typo)

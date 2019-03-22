@@ -9,6 +9,7 @@ import Foundation
 
 struct Configuration {
     static let fileName = ".typochecker.yml"
+    static let markdownName = "typochecker.md"
     static let language = "en_US"
     
     let ignoredWords: [String]

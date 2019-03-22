@@ -27,7 +27,7 @@ final class AnalyticsStringTypo: Analytics {
         }
         
         let outputer = ReportOutputer(reportType: configuration.reportType, results: typoList)
-        outputer.report()
+        outputer.report(checkType: .string)
         
         if typoList.isEmpty {
             print("No typo")
