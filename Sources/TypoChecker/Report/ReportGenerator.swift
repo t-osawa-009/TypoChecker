@@ -19,6 +19,8 @@ final class ReportGenerator {
             return XcodeReport(fileName: fileName, lineNumber: lineNumber, typoString: typoString)
         case .json:
             return JSONReport(fileName: fileName, lineNumber: lineNumber, typoString: typoString)
+        case .markdown:
+            return MarkdownReport(fileName: fileName, lineNumber: lineNumber, typoString: typoString)
         }
     }
 }

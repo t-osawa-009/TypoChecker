@@ -9,6 +9,7 @@ import Foundation
 
 struct Configuration {
     static let fileName = ".typochecker.yml"
+    static let markdownName = "typochecker.md"
     static let language = "en_US"
     
     let ignoredWords: [String]
@@ -16,8 +17,10 @@ struct Configuration {
     let language: String
     let rootDirectory: String
     let reportType: ReportType
+    let outputPath: String
     
-    init(fileName: String = Configuration.fileName, rootDirectory: String?, yamlDirectory: String?, reportType: ReportType) {
+    init(fileName: String = Configuration.fileName, rootDirectory: String?, yamlDirectory: String?, reportType: ReportType, outputPath: String) {
+        self.outputPath = outputPath
         let directoryPath: String = {
             if let rootDirectory = rootDirectory {
                 return rootDirectory
@@ -27,7 +30,6 @@ struct Configuration {
         }()
         
         self.rootDirectory = directoryPath
-        
         let yamlDirectoryPath: String = {
             if let _yamlDirectory = yamlDirectory {
                 return _yamlDirectory

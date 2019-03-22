@@ -21,6 +21,12 @@ let reportOption = StringOption(named: "report",
                                 helpString: "output report type",
                                 defaultValue: ReportType.json.rawValue)
 
+let outputOption = StringOption(named: "output",
+                                flag: "output",
+                                required: false,
+                                helpString: "output path",
+                                defaultValue: "")
+
 let options: [StringOption] = [pathOption, yamlOption, reportOption]
 
 options.forEach { (option) in
@@ -42,11 +48,13 @@ if parser.isValid {
 let _rootDirectory = parsedArgs?["path"] as? String ?? ""
 let _yamlDirectory = parsedArgs?["ymlPath"] as? String ?? ""
 let _reportOption = parsedArgs?["report"] as? String ?? ""
-let _reportType = ReportType(rawValue: _reportOption) ?? .json
+let _reportType = ReportType(rawValue: _reportOption) ?? .markdown
+let _output = parsedArgs?["output"] as? String ?? ""
 
 let configuration = Configuration(rootDirectory: _rootDirectory,
                                   yamlDirectory: _yamlDirectory,
-                                  reportType: _reportType)
+                                  reportType: _reportType,
+                                  outputPath: _output)
 
 let sourcePath = configuration.rootDirectory
 let ignoredWords: [String] = configuration.ignoredWords

@@ -10,6 +10,7 @@ import Foundation
 enum ReportType: String {
     case json
     case xcode
+    case markdown
 }
 
 protocol Reportable {
