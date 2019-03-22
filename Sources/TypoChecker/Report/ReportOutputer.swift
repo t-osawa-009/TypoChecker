@@ -33,7 +33,8 @@ final class ReportOutputer {
             let rows = [keys, "--- | --- | ---"] + results
             let result = rows.joined(separator: "\n")
             print(result)
-            if let folder = try? Folder(path: configuration.rootDirectory),
+            if !configuration.outputPath.isEmpty,
+                let folder = try? Folder(path: configuration.outputPath),
                 let file = try? folder.createFile(named: checkType.rawValue + "_" + Configuration.markdownName) {
                 _ = try? file.write(string: result)
             }
