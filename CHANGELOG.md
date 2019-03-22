@@ -1,5 +1,14 @@
 # Change Log
 
+## [0.0.7](https://github.com/takuchantuyoshi/TypoChecker/tree/0.0.7) (2019-03-22)
+[Full Changelog](https://github.com/takuchantuyoshi/TypoChecker/compare/0.0.6...0.0.7)
+
+**Merged pull requests:**
+
+- ✨ : 無視する設定を追加 [\#8](https://github.com/takuchantuyoshi/TypoChecker/pull/8) ([takuchantuyoshi](https://github.com/takuchantuyoshi))
+- Feature/add markdown report [\#7](https://github.com/takuchantuyoshi/TypoChecker/pull/7) ([takuchantuyoshi](https://github.com/takuchantuyoshi))
+- 📝 : add CHANGELOG [\#6](https://github.com/takuchantuyoshi/TypoChecker/pull/6) ([takuchantuyoshi](https://github.com/takuchantuyoshi))
+
 ## [0.0.6](https://github.com/takuchantuyoshi/TypoChecker/tree/0.0.6) (2019-03-21)
 [Full Changelog](https://github.com/takuchantuyoshi/TypoChecker/compare/0.0.5...0.0.6)
 
