@@ -57,7 +57,7 @@ class Analytics: NSObject {
     }
     
     private static func elementsInEnumerator(atPath path: String) -> [FileObject] {
-        if let file = try? File(path: path) {
+        if let file = try? File(path: path), allowFileExtension(file.extension ?? "") {
             if let content = try? file.readAsString(encoding: .utf8) {
                 return [FileObject(path: file.path, content: content)]
             } else {
@@ -66,7 +66,7 @@ class Analytics: NSObject {
         } else if let folder = try? Folder(path: path) {
             var element: [FileObject] = []
             folder.makeFileSequence(recursive: true, includeHidden: false).forEach { (file) in
-                if let content = try? file.readAsString(encoding: .utf8) {
+                if allowFileExtension(file.extension ?? ""), let content = try? file.readAsString(encoding: .utf8) {
                     element.append(FileObject(path: file.path, content: content))
                 }
             }
@@ -86,5 +86,14 @@ class Analytics: NSObject {
         }
         
         return result.offset + 1
+    }
+    
+    private static func allowFileExtension(_ fileExtension: String) -> Bool {
+        switch fileExtension {
+        case "swift", "m", "h":
+            return true
+        default:
+            return false
+        }
     }
 }
