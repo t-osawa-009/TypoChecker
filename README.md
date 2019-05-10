@@ -1,5 +1,6 @@
 # TypoChecker
 
+You can check typos in name or String.
 Typo checker made with swift.
 This project is heavily inspired by the [shiba1014/NoMoreTypo](https://github.com/shiba1014/NoMoreTypo), [realm/SwiftLint](https://github.com/realm/SwiftLint)
 
